@@ -1,78 +1,126 @@
-功能介绍：
-	目标定位，grabcut调参和多边形逼近调参。
-	
+# 🎯 objectRecoStudy
 
-<img src="object_ui.png" size="40%" />
+基于 **MFC + OpenCV DNN** 的目标识别与分割学习程序，涵盖 Mask R-CNN、SSD MobileNet、GrabCut、多边形逼近等算例，并在界面中展示输入输出与运行日志。
 
+| 项目 | 信息 |
+|------|------|
+| 📦 版本 | 1.2.0 |
+| ©️ 版权 | Copyright © 1999-2026 Aesthetic Company Limited. All rights reserved. |
+| 📧 联系 | 342247588@qq.com · 微信 kelvinluo79 |
 
+## ✨ 功能概览
 
+| 类别 | 算例 |
+|------|------|
+| 🎭 实例分割 | Mask R-CNN（图像 / 摄像头 / 视频） |
+| 🔍 目标检测 | SSD MobileNet v2 视频检测 |
+| ✂️ 分割优化 | 检测框 + GrabCut + `approxPolyDP` 四边形逼近 |
+| 🖱️ 交互分割 | GrabCut 参数学习 |
+| 🧠 框架专题 | Caffe / TensorFlow / PyTorch / SSD / 经典 ML |
 
+界面特性：
 
-================================================================================
-    MICROSOFT 基础类库 : objectRecoStudy 项目概述
-===============================================================================
+- 🎨 分组布局与 **Microsoft YaHei UI** 字体，避免中文乱码
+- 💡 每个按钮/输入框配有 **旁注说明** 与 **鼠标悬停提示**
+- ℹ️ 「关于」对话框显示 CMake 版本号与版权信息
+- 🖼️ 预览区显示算例输出图像，右侧日志记录路径与耗时
 
-应用程序向导已为您创建了此 objectRecoStudy 应用程序。此应用程序不仅演示 Microsoft 基础类的基本使用方法，还可作为您编写应用程序的起点。
+## 🚀 快速开始
 
-本文件概要介绍组成 objectRecoStudy 应用程序的每个文件的内容。
+```mermaid
+flowchart LR
+    A[📥 下载模型] --> B[🔨 编译]
+    B --> C[▶️ 运行]
+    C --> D[📂 查看 output/]
+    B -.-> E[📦 install 可选]
+```
 
-objectRecoStudy.vcxproj
-    这是使用应用程序向导生成的 VC++ 项目的主项目文件，其中包含生成该文件的 Visual C++ 的版本信息，以及有关使用应用程序向导选择的平台、配置和项目功能的信息。
+### 1️⃣ 下载模型
 
-objectRecoStudy.vcxproj.filters
-    这是使用“应用程序向导”生成的 VC++ 项目筛选器文件。它包含有关项目文件与筛选器之间的关联信息。在 IDE 中，通过这种关联，在特定节点下以分组形式显示具有相似扩展名的文件。例如，“.cpp”文件与“源文件”筛选器关联。
+```bat
+code\scripts\download_models.bat
+```
 
-objectRecoStudy.h
-    这是应用程序的主头文件。
-    其中包括其他项目特定的标头（包括 Resource.h），并声明 CobjectRecoStudyApp 应用程序类。
+模型说明与下载链接见 [docs/models.md](docs/models.md)。
 
-objectRecoStudy.cpp
-    这是包含应用程序类 CobjectRecoStudyApp 的主应用程序源文件。
+### 2️⃣ 编译
 
-objectRecoStudy.rc
-    这是程序使用的所有 Microsoft Windows 资源的列表。它包括 RES 子目录中存储的图标、位图和光标。此文件可以直接在 Microsoft Visual C++ 中进行编辑。项目资源包含在 2052 中。
+```bat
+code\scripts\build.bat
+```
 
-res\objectRecoStudy.ico
-    这是用作应用程序图标的图标文件。此图标包括在主资源文件 objectRecoStudy.rc 中。
+详见 [docs/BUILD.md](docs/BUILD.md)。
 
-res\objectRecoStudy.rc2
-    此文件包含不在 Microsoft Visual C++ 中进行编辑的资源。您应该将不可由资源编辑器编辑的所有资源放在此文件中。
+### 3️⃣ 运行
 
+```bat
+code\scripts\run.bat
+```
 
-/////////////////////////////////////////////////////////////////////////////
+详见 [docs/RUN.md](docs/RUN.md)。
 
-应用程序向导创建一个对话框类：
+### 4️⃣ 安装（可选）
 
-objectRecoStudyDlg.h、objectRecoStudyDlg.cpp - 对话框
-    这些文件包含 CobjectRecoStudyDlg 类。此类定义应用程序的主对话框的行为。对话框模板包含在 objectRecoStudy.rc 中，该文件可以在 Microsoft Visual C++ 中编辑。
+```bat
+code\scripts\install.bat
+```
 
-/////////////////////////////////////////////////////////////////////////////
+## 📁 目录结构
 
-其他功能：
+```mermaid
+flowchart TB
+    ROOT[objectRecoStudy/]
+    ROOT --> CODE[code/<br/>源码 · CMake · 文档]
+    ROOT --> MODELS[models/<br/>🧠 模型权重]
+    ROOT --> BUILD[build_msvc/<br/>🔧 编译中间文件]
+    ROOT --> RELEASE[msvc_release/<br/>▶️ exe + input/]
+    ROOT --> OUT[output/<br/>📤 运行输出]
+    ROOT --> INSTALL[install/<br/>📦 安装目录]
+    CODE --> SCRIPTS[scripts/<br/>build · run · install]
+    CODE --> DOCS[docs/<br/>BUILD · RUN · algorithms]
+```
 
-ActiveX 控件
-    该应用程序包含对使用 ActiveX 控件的支持。
+```
+objectRecoStudy/
+├── code/                 # 源码、CMake、脚本、文档
+│   ├── CMakeLists.txt
+│   ├── docs/             # BUILD / RUN / algorithms
+│   └── scripts/          # build / run / install / download_models
+├── models/               # 模型权重（需下载）
+├── msvc_release/         # 可执行文件 + input/
+├── build_msvc/           # 编译中间文件
+├── install/              # 安装目录
+└── output/               # 运行输出
+```
 
-/////////////////////////////////////////////////////////////////////////////
+所有路径在运行时相对于 **仓库根目录** 解析，移动项目位置不影响编译与运行。
 
-其他标准文件:
+## 🎬 默认演示数据
 
-StdAfx.h, StdAfx.cpp
-    这些文件用于生成名为 objectRecoStudy.pch 的预编译头 (PCH) 文件和名为 StdAfx.obj 的预编译类型文件。
+| 文件 | 位置 |
+|------|------|
+| 🖼️ `people.jpeg` | `msvc_release/input/people.jpeg` |
+| 🎥 `demo.mp4` | `msvc_release/input/demo.mp4` |
 
-Resource.h
-    这是标准头文件，可用于定义新的资源 ID。Microsoft Visual C++ 将读取并更新此文件。
+构建脚本在检测到源媒体存在时会自动复制。
 
-objectRecoStudy.manifest
-	Windows XP 使用应用程序清单文件来描述特定版本的并行程序集的应用程序依赖项。加载程序使用这些信息来从程序集缓存中加载相应的程序集，并保护其不被应用程序访问。应用程序清单可能会包含在内，以作为与应用程序可执行文件安装在同一文件夹中的外部 .manifest 文件进行重新分发，它还可能以资源的形式包含在可执行文件中。
-/////////////////////////////////////////////////////////////////////////////
+## 📚 文档索引
 
-其他注释:
+| 文档 | 内容 |
+|------|------|
+| [docs/BUILD.md](docs/BUILD.md) | 🔨 编译与环境配置 |
+| [docs/RUN.md](docs/RUN.md) | ▶️ 运行与界面操作 |
+| [docs/algorithms.md](docs/algorithms.md) | 🧮 核心算法说明 |
+| [docs/models.md](docs/models.md) | 📥 模型下载与路径 |
 
-应用程序向导使用“TODO:”来指示应添加或自定义的源代码部分。
+## 🛠️ 依赖
 
-如果应用程序使用共享 DLL 中的 MFC，您将需要重新分发 MFC DLL。如果应用程序所使用的语言与操作系统的区域设置不同，则还需要重新分发相应的本地化资源 mfc110XXX.DLL。
-有关上述话题的更多信息，请参见 MSDN 文档中有关重新分发 Visual C++ 应用程序的部分。
+- Visual Studio 2022（MFC、C++）
+- CMake + Ninja
+- OpenCV 5.0（`D:\win10\opencv500\build`，或 opencv4130 回退）
 
-/////////////////////////////////////////////////////////////////////////////
+路径默认值在 `code/cmake/DefaultPaths.cmake`，可通过 CMake `-D` 参数覆盖。
 
+## 📜 许可证
+
+Copyright © 1999-2026 Aesthetic Company Limited. All rights reserved.

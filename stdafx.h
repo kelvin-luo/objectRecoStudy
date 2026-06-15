@@ -57,6 +57,10 @@ using namespace  cv;
 
 #include "mask_rcnn.h"
 #include  "dnn_02_caffe_example_mobilenet.h"
+#include "ProjectPaths.h"
+#include "UiHelpers.h"
+#include "UiStrings.h"
+#include "Version.h"
 
 #include  <time.h>
 

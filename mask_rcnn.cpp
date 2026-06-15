@@ -14,6 +14,7 @@
 #include <opencv2/highgui.hpp>
 
 #include  "mask_rcnn.h"
+#include  "ProjectPaths.h"
 
 //const char* keys =
 //"{help h usage ? | | Usage examples: \n\t\t./mask-rcnn.out --image=traffic.jpg \n\t\t./mask-rcnn.out --video=sample.mp4}"
@@ -42,14 +43,16 @@ int  net_init__maskRcnn(Net &  net    )
 	if ( 1  )  
 	{
 		cout << "Use this script to run object detection using YOLO3 in OpenCV. " << endl;
-		string classesFile = "mscoco_labels.names";
+		std::wstring classesPath = projectpaths::ResolveModelFile(L"mscoco_labels.names");
+		string classesFile = projectpaths::ToUtf8(classesPath);
 		ifstream ifs(classesFile.c_str());
 		string line;
 		while (getline(ifs, line))
 			classes.push_back(line);
 
 		// Load the colors
-		string colorsFile = "colors.txt";
+		std::wstring colorsPath = projectpaths::ResolveModelFile(L"colors.txt");
+		string colorsFile = projectpaths::ToUtf8(colorsPath);
 		ifstream colorFptr(colorsFile.c_str());
 		while (getline(colorFptr, line))
 		{
@@ -63,8 +66,10 @@ int  net_init__maskRcnn(Net &  net    )
 		}
 
 		// Give the configuration and weight files for the model
-		String textGraph = "mask_rcnn_inception_v2_coco_2018_01_28.pbtxt";
-		String modelWeights = "D:\\dataModelWeightCode\\mask_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb";
+		std::wstring pbtxtPath = projectpaths::ResolveModelFile(L"mask_rcnn_inception_v2_coco_2018_01_28.pbtxt");
+		std::wstring weightsPath = projectpaths::ResolveModelFile(L"mask_rcnn_inception_v2_coco_2018_01_28/frozen_inference_graph.pb");
+		String textGraph = projectpaths::ToUtf8(pbtxtPath);
+		String modelWeights = projectpaths::ToUtf8(weightsPath);
 
 		// Load the network
 		net = readNetFromTensorflow(modelWeights, textGraph);
@@ -177,9 +182,9 @@ int recoImageSingle_maskRcnn_image_locate(Mat  imageInput)
 // For each frame, extract the bounding box and mask for each detected object
 void postprocess(Mat& frame, const vector<Mat>& outs_detection_maskrcnn  )   //   outs_detection_maskrcnn
 {
-	//一共90类
-	Mat outDetections = outs_detection_maskrcnn[0];     //   1 x 1 x N x 7  ; 若干行，  7列为检测结果
-	Mat outMasks = outs_detection_maskrcnn[1];     //    100x  90 x  15  x  15 ; 后两个为mask元素，第二个为类别数目或编号,第一个为检测到的对象数目
+	//???90??
+	Mat outDetections = outs_detection_maskrcnn[0];     //   1 x 1 x N x 7  ; ????????  7????????
+	Mat outMasks = outs_detection_maskrcnn[1];     //    100x  90 x  15  x  15 ; ???????mask????????????????????,?????????????????
 	
 
 	// Output size of masks is NxCxHxW where
