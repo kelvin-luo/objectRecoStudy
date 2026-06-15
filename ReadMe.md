@@ -27,7 +27,7 @@
 
 
 
-![截图](docs\assets\截图.PNG)
+![截图](docs/assets/截图.PNG)
 
 
 
